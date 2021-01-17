@@ -1,0 +1,3 @@
+# COMANDOS
+
+W: `wmic`
