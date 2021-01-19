@@ -2,7 +2,7 @@
 
 ## Network Address Translation
 
-La traducción de direcciones de red, también llamado enmascaramiento de IP o NAT (del inglés Network Address Translation), es un mecanismo utilizado por routers IP para intercambiar paquetes entre dos redes que asignan mutuamente direcciones incompatibles. Consiste en convertir, en tiempo real, las direcciones utilizadas en los paquetes transportados. También es necesario editar los paquetes para permitir la operación de protocolos que incluyen información de direcciones dentro de la conversación del protocolo.
+La traducción de direcciones de red, también llamado enmascaramiento de IP o NAT (del inglés _Network Address Translation_), es un mecanismo utilizado por routers IP para intercambiar paquetes entre dos redes que asignan mutuamente direcciones incompatibles. Consiste en convertir, en tiempo real, las direcciones utilizadas en los paquetes transportados. También es necesario editar los paquetes para permitir la operación de protocolos que incluyen información de direcciones dentro de la conversación del protocolo.
 
 De todas formas el uso de NAT  no proporciona ni privacidad ni ocultación.
 
@@ -10,7 +10,9 @@ De todas formas el uso de NAT  no proporciona ni privacidad ni ocultación.
 
 ### ¿Qué es un proxy?
 
-Un **proxy**, o servidor proxy, en una red informática, es un servidor —programa o dispositivo—, que hace de intermediario en las peticiones de recursos que realiza un cliente (A) a otro servidor (C). Por ejemplo, si una hipotética máquina A solicita un recurso a C, lo hará mediante una petición a B, que a su vez trasladará la petición a C; de esta forma C no sabrá que la petición procedió originalmente de A. Esta situación estratégica de punto intermedio le permite ofrecer diversas funcionalidades: control de acceso, registro del tráfico, restricción a determinados tipos de tráfico, mejora de rendimiento, anonimato de la comunicación, caché web, etc.
+Un **proxy**, o servidor proxy, en una red informática, es un servidor, programa o dispositivo, que hace de intermediario en las peticiones de recursos que realiza un cliente (A) a otro servidor (C). Por ejemplo, si una hipotética máquina A solicita un recurso a C, lo hará mediante una petición a B, que a su vez trasladará la petición a C; de esta forma C no sabrá que la petición procedió originalmente de A. Esta situación estratégica de punto intermedio le permite ofrecer diversas funcionalidades: control de acceso, registro del tráfico, restricción a determinados tipos de tráfico, mejora de rendimiento, anonimato de la comunicación, caché web, etc.
+
+Hay que tener cuidado al usar proxies de fiabilidad dudosa ya que todo el tráfico va a pasar por ellos.
 
 ### Proxies transparentes, anónimos y de élite
 
@@ -18,7 +20,7 @@ Un **proxy**, o servidor proxy, en una red informática, es un servidor —progr
 
 Los proxies transparentes:
 
-- Son servidores proxy estándar que no alteran la información del usuario y la dejan en su formato original.
+- Son servidores proxy estándar que no alteran la información del usuario y la dejan en su formato original (no proporcionan ni privacidad ni anonimato).
 - Revelan direcciones IP.
 - Manejan todo el tráfico HTTP.
   - El usuario no necesita ajustar ninguna configuración personal.
@@ -61,15 +63,9 @@ El uso de un proxy de élite es el grado de seguridad más avanzado:
 
 Los proxies de élite tienen una deficiencia: el encabezado REMOTE_ADDR guarda la dirección IP de un proxy. Por lo tanto, al reenviar paquetes de cookies almacenados desde su navegación sin un proxy de élite, los sitios web no lo identificarán. Para evitarlo: limpiar la caché y las cookies por adelantado.
 
+### Proxies ruidosos
 
-x forwarded for
-variables de entorno para configurar proxies en linux
-
-/etc/profile
-
-- http_proxy
-- https_proxy
-- ftp_proxy
+Ofrecen privacidad y ocultan utilizando el HTTP_X_FORWARDED_FOR para meter IPs aleatorias (ruido).
 
 ### Proxies SOCKS
 
@@ -79,6 +75,24 @@ El cliente que se comunica con SOCKS puede estar en la propia aplicación, o bie
 
 En los orígenes de la web fue un protocolo de acceso a web popular, pero el rápido desarrollo de los proxies HTTP o incluso de NAT y otras opciones de aseguramiento de las comunicaciones TCP/IP lo hizo caer en desuso prácticamente absoluto llegado el siglo XXI.
 
+### Configuración de proxies en Debian
+
+Existen variables de entorno para configurar los proxies:
+
+- http_proxy
+- https_proxy
+- ftp_proxy
+
+Una vez asignados valores con `export` todas las peticiones del protocolo se realizarán a través de la IP asignada.
+
 ## Uso de VPN
 
-vpn -> abre un tunel en capa tres en el que la paquetería va cifrada
+Una VPN. Abre un tunel (normalmente en capa tres) en el que la paquetería va cifrada, proporcionando privacidad y ocultación.
+
+## Borrado seguro
+
+Necesario cuando se quiere evitar dejar trazas en equipos. Software de análisis forense es capaz de recuperar ficheros o sistemas de ficheros.
+
+## Redes de anonimato
+
+Tor
